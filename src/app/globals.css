@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@layer utilities {
+    .container-padding {
+        padding: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .container-padding {
+            padding: 2rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .container-padding{
+            padding: 4rem;
+        }
+    }
+}
+
+.section {
+    @apply py-24 md:py-32 lg:py-40
+}
+
+.line {
+@apply overflow-hidden;
+}
+
+
+.word {
+    opacity: 0;
+    transform: translateY(100%);  
+    display: inline-block;
+    overflow: hidden;
+    visibility: visible;
+    will-change: transform, opacity;
+   
+  }
+  
