@@ -24,7 +24,7 @@ const faqs = [
   {
     question: "What industries do you specialize in?",
     answer:
-      "I have experience across various industries including technology, retail, hospitality, and professional services, bringing fresh perspectives to each project.",
+      "I specialize in crafting scalable, responsive, and visually engaging frontend web applications for startups and businesses, leveraging Next.js for high-performance, SEO-friendly solutions.",
   },
 ];
 

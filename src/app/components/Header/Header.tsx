@@ -22,8 +22,10 @@ const navItems = [
     href: "#faqs",
   },
   {
-    label: "Contact",
-    href: "#contact",
+    href: "https://github.com/amaltechworld",
+    label: "GitHub",
+    target: "_blank",
+    rel: "noopener noreferrer",
   },
 ];
 
@@ -122,11 +124,18 @@ const Header = () => {
     const url = new URL(e.currentTarget.href);
     const hash = url.hash;
 
+    //  Ignore external links (GitHub, LinkedIn, etc.)
+    if (!hash || e.currentTarget.target === "_blank") {
+      window.open(url.toString(), "_blank");
+      return;
+    }
     const target = document.querySelector(hash);
 
-    if(!target) return;
+    if (!target) return;
     target.scrollIntoView({ behavior: "smooth" });
   }
+
+  const [contactIsOpen, contactSetIsOpen] = useState(false);
 
   return (
     <header>
@@ -136,13 +145,15 @@ const Header = () => {
         ref={navScope}
       >
         <nav className="mt-20 flex flex-col">
-          {navItems.map(({ href, label }) => (
+          {navItems.map(({ href, label, target, rel }) => (
             <a
               href={href}
               key={label}
               className="text-stone-200 border-t last:border-b border-stone-800 py-3 group relative" //py?
               // onClick={(e) => handleClickMobileNavItem(e)}
               onClick={handleClickMobileNavItem}
+              {...(target && { target })}
+              {...(rel && { rel })}
             >
               {/* seperate absolute div for bg while hovering */}
               <div className="absolute w-full h-0 bg-stone-800 group-hover:h-full transition-all duration-500 z-[-1] bottom-0"></div>
@@ -165,7 +176,7 @@ const Header = () => {
             <div>
               <a href="/">
                 <span className="text-xl text-white font-bold uppercase">
-                  Alex&nbsp; Taylor
+                  Amal&nbsp; Raj
                 </span>
               </a>
             </div>
@@ -217,9 +228,65 @@ const Header = () => {
                   />
                 </svg>
               </div>
-              <button className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316] uppercase hidden md:inline-flex items-center">
+
+              {/* <button className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316] uppercase hidden md:inline-flex items-center">
                 CONTACT ME
-              </button>
+              </button> */}
+              <div className="relative">
+                {/* Contact Button */}
+                <button
+                  className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316] uppercase hidden md:inline-flex items-center cursor-pointer"
+                  onClick={() => contactSetIsOpen(!isOpen)}
+                  onMouseEnter={() => contactSetIsOpen(true)}
+                  onMouseLeave={() => contactSetIsOpen(false)}
+                >
+                  CONTACT ME
+                </button>
+
+                {/* Dropdown Menu */}
+                <div
+                  className={`absolute top-12 left-0 w-48 bg-[#e7e5e4] shadow-lg rounded-lg transition-all duration-300 ease-in-out ${
+                    contactIsOpen
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-90"
+                  }`}
+                  onMouseEnter={() => contactSetIsOpen(true)}
+                  onMouseLeave={() => contactSetIsOpen(false)}
+                >
+                  <ul className="py-2">
+                    <li>
+                      <a
+                        href="https://www.linkedin.com/in/amaltechworld/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 hover:bg-gray-50 hover:ml-2 transition-all"
+                      >
+                        LinkedIn
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="mailto:amaltechworld@gmail.com?subject=Website Inquiry&body=Hi Amal, I’m interested in a website."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 hover:bg-gray-50 hover:ml-2 transition-all"
+                      >
+                        Gmail
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://wa.me/8943374122"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 hover:bg-gray-50 hover:ml-2 transition-all"
+                      >
+                        WhatsApp
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             {/* right side end */}
           </div>

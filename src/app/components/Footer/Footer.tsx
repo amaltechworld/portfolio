@@ -1,7 +1,7 @@
 "use client";
 
 import UpRightArrow from "../icons/arrow-up-right.svg";
-import FooterButton from "@/app/subComponents/FooterButton";
+import FooterButton from "@/app/components/Footer/FooterButton";
 import { useState } from "react";
 
 const navItems = [
@@ -22,8 +22,10 @@ const navItems = [
     label: "Faqs",
   },
   {
-    href: "#contact",
-    label: "Contact",
+    href: "https://github.com/amaltechworld",
+    label: "GitHub",
+    target: "_blank",
+    rel: "noopener noreferrer",
   },
 ];
 
@@ -37,6 +39,11 @@ const Footer = () => {
 
     const url = new URL(e.currentTarget.href);
     const hash = url.hash;
+
+    if (!hash) {
+      window.open(url.toString(), "_blank");
+      return;
+    }
 
     const target = document.querySelector(hash);
 
@@ -59,19 +66,27 @@ const Footer = () => {
               <h2 className="text-4xl md:text-7xl lg:text-8xl mt-8 font-extralight">
                 Enough talk. Let's make something great together.
               </h2>
-              <FooterButton iconAfter={<UpRightArrow className="size-5 " />}>
-                info@alextaylor.com
+              <FooterButton
+                iconAfter={<UpRightArrow className="size-5 " />}
+                onClick={() => {
+                 window.location.href =
+                   "mailto:amaltechworld@gmail.com?subject=Website Inquiry&body=Hi Amal, I’m interested in a website.";
+                }}
+              >
+                amaltechworld@gmail.com
               </FooterButton>
             </div>
             {/* nav section md: right side */}
             <div className="md:col-span-1">
               <nav className="flex flex-col md:items-end gap-8 mt-16 md:mt-0">
-                {navItems.map(({ href, label }) => (
+                {navItems.map(({ href, label, target, rel }) => (
                   <a
                     href={href}
                     key={label}
                     className="group relative"
                     onClick={handleClickMobileNavItem}
+                    {...(target && { target })}
+                    {...(rel && {rel})}
                   >
                     <button className="text-lg cursor-pointer relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-orange-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100">
                       {label}
@@ -84,7 +99,7 @@ const Footer = () => {
         </div>
         {/* py added div-end */}
         <p className="py-16 text-white/30 text-sm">
-          Copyright &copy; Alex Taylor &bull; All rights reserved
+          Copyright &copy; Amal Raj &bull; All rights reserved
         </p>
       </div>
     </footer>

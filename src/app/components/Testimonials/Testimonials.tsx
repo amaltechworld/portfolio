@@ -9,21 +9,21 @@ import Testimonial from "./Testimonial";
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const testimonials = [
   {
-    name: "Sarah Chen",
-    company: "Pixel Perfect",
-    role: "Head of Design",
+    name: "Neeraj",
+    company: "MyGala",
+    role: "Founder and C.E.O",
     quote:
-      "Alex's expertise in both technical development and design created a beautiful, high-performing website.",
-    image: "/testimonial-1.jpg",
+      "Amal, we truly appreciate your dedication to bringing our design vision to life within the given timeframe. Your commitment to excellence ensures we’ll collaborate again in the future.",
+    image: "/neeraj.jpg",
     imagePositionY: 0.2,
   },
   {
-    name: "Marcus Rodriguez",
-    company: "Craft Coffee Co.",
-    role: "Founder",
+    name: "Prabhul",
+    company: "Robistaan Techlab Pvt. Ltd.",
+    role: "Founder and C.E.O",
     quote:
-      "Alex transformed our boutique coffee brand with a website that perfectly balances aesthetics and functionality.",
-    image: "/testimonial-2.jpg",
+      "Amal, innovative approach to styling our website truly exceeded expectations.",
+    image: "/prabhul.jpeg",
     imagePositionY: 0.1,
   },
   {

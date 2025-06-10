@@ -1,7 +1,7 @@
 "use client";
 
 import ChevronIcon from "../icons/chevron-double-down.svg";
-import HeroButton from "@/app/subComponents/HeroButton";
+import HeroButton from "@/app/components/Hero/HeroButton";
 import SplitType from "split-type";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -127,7 +127,7 @@ const Hero = () => {
               src="/hero-image.jpg"
               alt="hero image"
               fill
-              className=" object-cover "
+              className=" object-cover filter grayscale"
               priority
               sizes="(min-width: 768px) 40vw, 100vw"
             />
