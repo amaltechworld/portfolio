@@ -2,7 +2,6 @@
 
 import UpRightArrow from "../icons/arrow-up-right.svg";
 import FooterButton from "@/app/components/Footer/FooterButton";
-import { useState } from "react";
 
 const navItems = [
   {
