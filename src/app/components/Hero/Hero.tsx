@@ -60,7 +60,7 @@ const Hero = () => {
         onComplete: () => setReady(true),
       }
     );
-  }, []);
+  }, [titleAnimate, titleScope]);
 
   return (
     <section>
@@ -108,7 +108,7 @@ const Hero = () => {
                 className="relative"
               >
                 <button className="h-auto px-0 border-transparent inline-flex after: content-[''] after:h-px after:w-0 after:absolute after:top-full after:bg-[#f97316] hover:after:w-full after:transition-all after:duration-300 after:ease-in-out">
-                  Let's Talk
+                  Let&apos;s Talk
                 </button>
               </motion.div>
             </div>

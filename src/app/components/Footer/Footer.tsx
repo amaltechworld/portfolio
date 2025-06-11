@@ -30,12 +30,10 @@ const navItems = [
 ];
 
 const Footer = () => {
-  const [isOpen, setIsOpen] = useState(false);
 
   // prevent the default jump behaviour (animate the closing of nav, smoothly)
   const handleClickMobileNavItem = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setIsOpen(false);
 
     const url = new URL(e.currentTarget.href);
     const hash = url.hash;
@@ -64,13 +62,13 @@ const Footer = () => {
             {/* md: left side */}
             <div className="md:col-span-2">
               <h2 className="text-4xl md:text-7xl lg:text-8xl mt-8 font-extralight">
-                Enough talk. Let's make something great together.
+                Enough talk. Let&apos;s make something great together.
               </h2>
               <FooterButton
                 iconAfter={<UpRightArrow className="size-5 " />}
                 onClick={() => {
-                 window.location.href =
-                   "mailto:amaltechworld@gmail.com?subject=Website Inquiry&body=Hi Amal, I’m interested in a website.";
+                  window.location.href =
+                    "mailto:amaltechworld@gmail.com?subject=Website Inquiry&body=Hi Amal, I’m interested in a website.";
                 }}
               >
                 amaltechworld@gmail.com
@@ -86,7 +84,7 @@ const Footer = () => {
                     className="group relative"
                     onClick={handleClickMobileNavItem}
                     {...(target && { target })}
-                    {...(rel && {rel})}
+                    {...(rel && { rel })}
                   >
                     <button className="text-lg cursor-pointer relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-orange-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100">
                       {label}

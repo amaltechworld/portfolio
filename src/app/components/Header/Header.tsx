@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
 import ArrowUpRight from "../icons/arrow-up-right.svg"
+import Link from "next/link";
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const navItems = [
@@ -174,11 +175,11 @@ const Header = () => {
         <div className="container mx-auto px-[1rem] md:px-[2rem] lg:px-[4rem] !max-w-full">
           <div className="flex justify-between h-20 items-center">
             <div>
-              <a href="/">
+              <Link href="/">
                 <span className="text-xl text-white font-bold uppercase">
                   Amal&nbsp; Raj
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
