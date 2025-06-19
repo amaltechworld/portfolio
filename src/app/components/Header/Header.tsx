@@ -171,13 +171,15 @@ const Header = () => {
       </div>
       {/* navbar- end */}
       {/* left content-LOGO start  */}
-      <div className="fixed top-0 left-0 w-full backdrop-blur-md mix-blend-difference z-10">
+      <div className="fixed top-0 left-0 w-full backdrop-blur-md mix-blend-difference z-[100]">
         <div className="container mx-auto px-[1rem] md:px-[2rem] lg:px-[4rem] !max-w-full">
-          <div className="flex justify-between h-20 items-center">
+          <div className="flex justify-between h-20 items-center ">
             <div>
-              <Link href="/">
-                <span className="text-xl text-white font-bold uppercase">
+              <Link href="/" className="group pointer-events-auto ">
+                <span className="relative text-xl text-white font-bold uppercase cursor-pointer">
                   Amal&nbsp; Raj
+                  {/* Underline */}
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
                 </span>
               </Link>
             </div>

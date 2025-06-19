@@ -62,12 +62,12 @@ export default function WeeklyProject({ year, month }: WeeklyProjectProps) {
     <div className="container mx-auto px-4 py-8">
       {/* Stats Section - Vertical on mobile, Horizontal on md+ */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-start md:space-x-8 mb-8">
-        <h1 className="text-2xl font-bold">Total Work ({totalProjects})</h1>
+        <h1 className="text-2xl font-bold">Total Works ({totalProjects})</h1>
         <p className="mt-2 md:mt-0">
-          Total Work in {year}: ({yearlyProjects})
+          Total Works in {year}: ({yearlyProjects})
         </p>
         <p className="mt-2 md:mt-0">
-          Total Work in{" "}
+          Total Works in{" "}
           {new Date(year, month - 1).toLocaleString("default", {
             month: "long",
           })}

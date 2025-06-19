@@ -9,6 +9,5 @@ export default async function MonthlyProjectPage({
   const year = Number(resolvedParams.year);
   const month = Number(resolvedParams.month);
 
-  // Pass a default week value or handle it in the WeeklyProject component
-  return <WeeklyProject year={year} month={month} week={1} />;
+  return <WeeklyProject year={year} month={month} />;
 }

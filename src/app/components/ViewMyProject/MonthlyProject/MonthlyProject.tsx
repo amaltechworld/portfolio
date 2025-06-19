@@ -4,7 +4,7 @@ import { getAllProjects } from "@/lib/api";
 import { Project } from "@/types/project";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+
 
 // Create a reusable LoadingSpinner component
 const LoadingSpinner = () => (
@@ -75,11 +75,11 @@ export default function MonthlyProject() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Stats Section - Horizontal on md+ screens */}
-      <div className="flex flex-col md:flex-row md:items-center md:space-x-8 mb-8">
+      <div className="flex flex-col justify-between md:flex-row md:items-center md:space-x-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:space-x-8">
-          <h2 className="text-2xl font-bold">Total Work ({projects.length})</h2>
+          <h2 className="text-2xl font-bold">Total Works ({projects.length})</h2>
           <p className="mt-2 md:mt-0">
-            Total Work in {selectedYear} ({projectsThisYear.length})
+            Total Works in {selectedYear} ({projectsThisYear.length})
           </p>
         </div>
 
