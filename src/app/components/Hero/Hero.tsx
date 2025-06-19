@@ -5,6 +5,8 @@ import HeroButton from "@/app/components/Hero/HeroButton";
 import SplitType from "split-type";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+
 import {
   useAnimate,
   stagger,
@@ -13,11 +15,10 @@ import {
   useTransform,
 } from "framer-motion";
 
-
-
 const Hero = () => {
   const [titleScope, titleAnimate] = useAnimate();
   const [ready, setReady] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const scrollingDiv = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -27,7 +28,6 @@ const Hero = () => {
 
   // const isDesktop = useMediaQuery("(min-width: 768px)");
   const portraitWidth = useTransform(scrollYProgress, [0, 1], ["100%", "240%"]); // total grid column 12 | 12/5 is image area (right) 12/5 = 2.4 * 100 => 240
-  
 
   useEffect(() => {
     if (!titleScope.current) return;
@@ -62,6 +62,10 @@ const Hero = () => {
     );
   }, [titleAnimate, titleScope]);
 
+  const handleClick = () => {
+    setIsNavigating(true);
+  };
+
   return (
     <section>
       {/* content */}
@@ -89,12 +93,23 @@ const Hero = () => {
                   ease: "easeOut",
                 }}
               >
-                <HeroButton>
-                  <span>View My Work</span>
-                  <div className="size-5">
-                    <ChevronIcon />
+                <Link
+                  href="/monthly-project"
+                  onClick={handleClick}
+                  className="..."
+                >
+                  <HeroButton>
+                    <span>View My Work</span>
+                    <div className="size-5">
+                      <ChevronIcon />
+                    </div>
+                  </HeroButton>
+                </Link>
+                {isNavigating && (
+                  <div className="fixed inset-0 bg-white/80 z-50 flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
                   </div>
-                </HeroButton>
+                )}
               </motion.div>
               {/* button 2 */}
               <motion.div

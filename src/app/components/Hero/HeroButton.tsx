@@ -4,7 +4,7 @@ type ButtonProps = {
 
 const HeroButton = ({ children }: ButtonProps) => {
   return (
-    <button className=" border border-[#f97316]  rounded-xl px-4 py-2 transition duration-500 hover:bg-[#f97316] hover:text-white">
+    <button className=" border border-[#f97316]  rounded-xl px-4 py-2 transition duration-500 hover:bg-[#f97316] hover:text-white cursor-pointer">
       <span className="flex gap-2">{children}</span>
     </button>
   );
