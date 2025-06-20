@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { account } from "@/lib/appwrite";
 
 export default function NewProject() {
-    
+  
 
   const [form, setForm] = useState({
     title: "",

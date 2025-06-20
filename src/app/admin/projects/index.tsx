@@ -7,7 +7,6 @@ import { account } from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
 
 export default function AdminProjects() {
-
     const router = useRouter();
 
     useEffect(() => {
@@ -38,16 +37,32 @@ export default function AdminProjects() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Projects</h1>
-      <Link href="/admin/projects/new" className="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
+      <Link
+        href="/admin/projects/new"
+        className="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block hover:bg-blue-700"
+      >
         + Add New Project
       </Link>
       <ul>
-        {projects.map((project : any) => (
-          <li key={project.$id} className="flex justify-between items-center border-b py-2">
+        {projects.map((project: any) => (
+          <li
+            key={project.$id}
+            className="flex justify-between items-center border-b py-2"
+          >
             <span>{project.title}</span>
             <div>
-              <Link href={`/admin/projects/${project.$id}`} className="text-blue-600 mr-4">Edit</Link>
-              <button onClick={() => handleDelete(project.$id)} className="text-red-600">Delete</button>
+              <Link
+                href={`/admin/projects/${project.$id}`}
+                className="text-blue-600 mr-4"
+              >
+                Edit
+              </Link>
+              <button
+                onClick={() => handleDelete(project.$id)}
+                className="text-red-600"
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}

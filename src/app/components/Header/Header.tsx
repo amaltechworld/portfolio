@@ -4,6 +4,7 @@ import { motion, useAnimate } from "framer-motion";
 import ArrowUpRight from "../icons/arrow-up-right.svg";
 import Link from "next/link";
 
+
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const navItems = [
   {
@@ -186,9 +187,10 @@ const Header = () => {
                 <span className="relative text-xl text-white font-bold uppercase cursor-pointer z-50">
                   Amal&nbsp; Raj
                   {/* Underline */}
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
+               <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
                 </span>
-              </Link>
+              </Link> 
+
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { account } from "@/lib/appwrite";
 
 export default function EditProject() {
     const router = useRouter();
-
+    
     useEffect(() => {
       account.get().catch(() => {
         router.push("/admin/login");
