@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
-import ArrowUpRight from "../icons/arrow-up-right.svg"
+import ArrowUpRight from "../icons/arrow-up-right.svg";
 import Link from "next/link";
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
@@ -134,7 +134,7 @@ const Header = () => {
 
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth" });
-  }
+  };
 
   const [contactIsOpen, contactSetIsOpen] = useState(false);
 
@@ -142,10 +142,16 @@ const Header = () => {
     <header>
       {/* navbar- start */}
       <div
-        className="fixed top-0 left-0 w-full h-0 overflow-hidden bg-stone-900 z-10"
+        className="fixed top-0 left-0 w-full h-0 overflow-hidden bg-stone-900 z-30 "
         ref={navScope}
       >
-        <nav className="mt-20 flex flex-col">
+        <div
+          // className="absolute top-0 left-0 w-full h-full z-10"
+          className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none"
+          // onClick={() => setIsOpen(false)}
+        ></div>
+        {/* <nav className="mt-20 flex flex-col relative z-20"> */}
+        <nav className="mt-20 flex flex-col relative z-20 pointer-events-auto">
           {navItems.map(({ href, label, target, rel }) => (
             <a
               href={href}
@@ -169,14 +175,15 @@ const Header = () => {
           ))}
         </nav>
       </div>
+
       {/* navbar- end */}
       {/* left content-LOGO start  */}
-      <div className="fixed top-0 left-0 w-full backdrop-blur-md mix-blend-difference z-[100]">
+      <div className="fixed top-0 left-0 w-full backdrop-blur-md mix-blend-difference z-[999]  pointer-events-auto">
         <div className="container mx-auto px-[1rem] md:px-[2rem] lg:px-[4rem] !max-w-full">
           <div className="flex justify-between h-20 items-center ">
-            <div>
+            <div className="relative z-[1001] pointer-events-auto">
               <Link href="/" className="group pointer-events-auto ">
-                <span className="relative text-xl text-white font-bold uppercase cursor-pointer">
+                <span className="relative text-xl text-white font-bold uppercase cursor-pointer z-50">
                   Amal&nbsp; Raj
                   {/* Underline */}
                   <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
@@ -189,7 +196,8 @@ const Header = () => {
       {/* left content end  */}
 
       {/* right content -SVG icon*/}
-      <div className="fixed top-0 left-0 w-full z-10">
+      {/* <div className="fixed top-0 left-0 w-full z-50"> */}
+      <div className="fixed top-0 left-0 w-full z-[999] pointer-events-auto">
         <div className="container mx-auto px-[1rem] md:px-[2rem] lg:px-[4rem] !max-w-full">
           <div className="flex justify-end h-20  items-center">
             <div className="flex items-center gap-4">
