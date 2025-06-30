@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { getAllProjects } from "@/lib/api";
 import { Project } from "@/types/project";
@@ -22,6 +22,8 @@ const DailyProject = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -34,6 +36,29 @@ const DailyProject = ({
     };
     fetchProjects();
   }, [year, month, week]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(
+              entry.target.getAttribute("data-index") || "0",
+              10
+            );
+            setVisibleProjects((prev) => [...prev, projects[index]]);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = observerRef.current?.querySelectorAll(".lazy-load") || [];
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, [projects]);
 
   if (loading) return <LoadingSpinner />;
 
@@ -71,15 +96,18 @@ const DailyProject = ({
   const totalWorksInWeek = filteredProjects.length;
 
   return (
-    <div className="p-4">
+    <div className="container mx-auto px-4 py-8" ref={observerRef}>
       {/* Stats Headings */}
 
-      <h1 className="text-3xl font-bold mb-6">
-        Projects for Week {week} ({weekStart} - {weekEnd}{" "}
-        {new Date(year, month - 1).toLocaleString("default", {
-          month: "long",
-        })}{" "}
-        {year})
+      <h1 className="text-2xl font-bold mb-6">
+        Projects for Week {week}
+        <span className="block sm:inline">
+          ({weekStart} - {weekEnd}{" "}
+          {new Date(year, month - 1).toLocaleString("default", {
+            month: "long",
+          })}{" "}
+          {year})
+        </span>
       </h1>
       <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 sm:gap-4 mb-6">
         <div className="flex items-center gap-2">
@@ -95,26 +123,68 @@ const DailyProject = ({
           <span>({totalWorksInWeek})</span>
         </div>
       </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {filteredProjects.map((project: any) => (
-          <motion.a
+        {projects.map((project: any, index: number) => (
+          <motion.div
             key={project.$id}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center w-full"
+            className="relative flex flex-col items-center w-full group lazy-load"
+            data-index={index}
+            initial={{ opacity: 0, y: 50 }} // Start from below with opacity 0
+            animate={{
+              opacity: visibleProjects.includes(project) ? 1 : 0,
+              y: visibleProjects.includes(project) ? 0 : 50,
+            }} // Slide in to position
+            transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered animation
+            whileHover={{ scale: 1.05 }} // Hover effect
           >
-            <div className="w-full aspect-square bg-white rounded-xl shadow overflow-hidden">
+            {/* Card Image */}
+            <div className="w-full aspect-square bg-white rounded-xl shadow overflow-hidden relative">
               <img
                 src={project.image}
                 alt=""
                 className="w-full h-full object-cover"
               />
+              {/* Overlay on Hover */}
+              <div className="absolute inset-0 bg-white/90 text-black flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-full group-hover:translate-y-0">
+                <h3 className="text-lg font-bold py-2">Site Quality Report</h3>
+                <p className="text-sm font-semibold">
+                  Performance:{" "}
+                  <span className="text-green-600">
+                    {project.performance}/100
+                  </span>
+                </p>
+                <p className="text-sm font-semibold">
+                  SEO: <span className="text-green-600">{project.seo}/100</span>
+                </p>
+                <p className="text-sm font-semibold">
+                  Accessibility:{" "}
+                  <span className="text-green-600">
+                    {project.accessibility}/100
+                  </span>
+                </p>
+                <p className="text-sm font-semibold">
+                  Best Practices:{" "}
+                  <span className="text-green-600">
+                    {project.bestPractices}/100
+                  </span>
+                </p>
+              </div>
             </div>
+            {/* Date */}
             <div className="mt-2 text-center text-base font-medium text-gray-700">
               {new Date(project.date).toLocaleDateString()}
             </div>
-          </motion.a>
+            {/* Visit Page Button */}
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 px-4 py-2 bg-[#f97316] text-white text-sm font-semibold rounded-lg shadow hover:bg-orange-600"
+            >
+              Visit Page
+            </a>
+          </motion.div>
         ))}
       </div>
     </div>

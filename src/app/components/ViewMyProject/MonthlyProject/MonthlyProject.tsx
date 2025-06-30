@@ -5,7 +5,6 @@ import { Project } from "@/types/project";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-
 // Create a reusable LoadingSpinner component
 const LoadingSpinner = () => (
   <div className="fixed inset-0 bg-white/80 z-50 flex items-center justify-center">
@@ -28,28 +27,17 @@ export default function MonthlyProject() {
 
     const fetchProjects = async () => {
       try {
-        // Show loading state immediately
         setLoading(true);
-
-        // Artificial delay to ensure loading animation is visible
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
         const data = await getAllProjects();
-
-        if (mounted) {
-          setProjects(data);
-          // Get unique years
-          const uniqueYears = Array.from(new Set(data.map((p) => p.year))).sort(
-            (a, b) => b - a
-          );
-          setYears(uniqueYears);
-        }
+        setProjects(data);
+        const uniqueYears = Array.from(new Set(data.map((p) => p.year))).sort(
+          (a, b) => b - a
+        );
+        setYears(uniqueYears);
       } catch (error) {
         console.error("Error fetching projects:", error);
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
@@ -77,7 +65,9 @@ export default function MonthlyProject() {
       {/* Stats Section - Horizontal on md+ screens */}
       <div className="flex flex-col justify-between md:flex-row md:items-center md:space-x-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:space-x-8">
-          <h2 className="text-2xl font-bold">Total Works ({projects.length})</h2>
+          <h2 className="text-2xl font-bold">
+            Total Works ({projects.length})
+          </h2>
           <p className="mt-2 md:mt-0">
             Total Works in {selectedYear} ({projectsThisYear.length})
           </p>

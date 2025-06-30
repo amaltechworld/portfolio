@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getAllProjects, deleteProject } from "@/lib/api"; // Make sure you have these functions
+import { getProjects, deleteProject } from "@/lib/api"; // Make sure you have these functions
 import { Project } from "@/types/project";
 import { account } from "@/lib/appwrite";
 import { useRouter } from "next/navigation";

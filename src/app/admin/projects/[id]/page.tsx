@@ -25,7 +25,7 @@ export default function EditProject() {
 
   useEffect(() => {
     if (!id) return;
-    getProject(id).then((data) => {
+    getProject(id).then((data: any) => {
       setForm(data);
       setLoading(false);
     });
