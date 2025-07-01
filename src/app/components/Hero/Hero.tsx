@@ -67,7 +67,7 @@ const Hero = () => {
   };
 
   return (
-    <section>
+    <section className="relative" id="hero">
       {/* content */}
       <div className="grid md:grid-cols-12 md:h-screen items-stretch sticky top-0">
         {/* left content */}
@@ -107,7 +107,7 @@ const Hero = () => {
                 </Link>
                 {isNavigating && (
                   <div className="fixed inset-0 bg-white/80 z-50 flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
                   </div>
                 )}
               </motion.div>

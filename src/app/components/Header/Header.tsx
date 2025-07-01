@@ -4,9 +4,12 @@ import { motion, useAnimate } from "framer-motion";
 import ArrowUpRight from "../icons/arrow-up-right.svg";
 import Link from "next/link";
 
-
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const navItems = [
+  {
+    label: "Home",
+    href: "#hero",
+  },
   {
     label: "About",
     href: "#intro",
@@ -22,12 +25,6 @@ const navItems = [
   {
     label: "FAQs",
     href: "#faqs",
-  },
-  {
-    href: "https://github.com/amaltechworld",
-    label: "GitHub",
-    target: "_blank",
-    rel: "noopener noreferrer",
   },
 ];
 
@@ -123,18 +120,29 @@ const Header = () => {
     e.preventDefault();
     setIsOpen(false);
 
-    const url = new URL(e.currentTarget.href);
-    const hash = url.hash;
+    const hash = e.currentTarget.getAttribute("href");
 
-    //  Ignore external links (GitHub, LinkedIn, etc.)
-    if (!hash || e.currentTarget.target === "_blank") {
-      window.open(url.toString(), "_blank");
+    // Ensure that clicking 'Home' leads to the main page (hero section) in the same tab
+    if (hash === "#hero") {
+      // If we're not on the home page, navigate to home page
+      if (window.location.pathname !== "/") {
+        window.location.href = "/";
+        return;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    const target = document.querySelector(hash);
 
-    if (!target) return;
-    target.scrollIntoView({ behavior: "smooth" });
+    // Scroll to the target section for other navigation items
+    if (hash) {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // If target section doesn't exist on current page, navigate to home page with hash
+        window.location.href = "/" + hash;
+      }
+    }
   };
 
   const [contactIsOpen, contactSetIsOpen] = useState(false);
@@ -147,23 +155,20 @@ const Header = () => {
         ref={navScope}
       >
         <div
-          // className="absolute top-0 left-0 w-full h-full z-10"
           className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none"
-          // onClick={() => setIsOpen(false)}
+          onClick={() => setIsOpen(false)}
         ></div>
-        {/* <nav className="mt-20 flex flex-col relative z-20"> */}
+
         <nav className="mt-20 flex flex-col relative z-20 pointer-events-auto">
-          {navItems.map(({ href, label, target, rel }) => (
+          {navItems.map(({ href, label }) => (
             <a
               href={href}
               key={label}
               className="text-stone-200 border-t last:border-b border-stone-800 py-3 group relative" //py?
               // onClick={(e) => handleClickMobileNavItem(e)}
               onClick={handleClickMobileNavItem}
-              {...(target && { target })}
-              {...(rel && { rel })}
             >
-              {/* seperate absolute div for bg while hovering */}
+              {/* separate absolute div for bg while hovering */}
               <div className="absolute w-full h-0 bg-stone-800 group-hover:h-full transition-all duration-500 z-[-1] bottom-0"></div>
               {/* nav content */}
               <div className="container mx-auto container-padding !max-w-full flex items-center justify-between z-10">
@@ -182,15 +187,12 @@ const Header = () => {
       <div className="fixed top-0 left-0 w-full backdrop-blur-md mix-blend-difference z-[999]  pointer-events-auto">
         <div className="container mx-auto px-[1rem] md:px-[2rem] lg:px-[4rem] !max-w-full">
           <div className="flex justify-between h-20 items-center ">
-            <div className="relative z-[1001] pointer-events-auto">
-              <Link href="/" className="group pointer-events-auto ">
-                <span className="relative text-xl text-white font-bold uppercase cursor-pointer z-50">
-                  Amal&nbsp; Raj
-                  {/* Underline */}
-               <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
-                </span>
-              </Link> 
-
+            <div className="relative z-[1001] pointer-events-none">
+              <span className="relative text-xl text-white font-bold uppercase cursor-default z-50">
+                Amal&nbsp; Raj
+                {/* Underline */}
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-500"></span>
+              </span>
             </div>
           </div>
         </div>
@@ -245,10 +247,10 @@ const Header = () => {
               {/* <button className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316] uppercase hidden md:inline-flex items-center">
                 CONTACT ME
               </button> */}
-              <div className="relative">
+              <div className="relative ">
                 {/* Contact Button */}
                 <button
-                  className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316] uppercase hidden md:inline-flex items-center cursor-pointer"
+                  className="bg-[#f97316] h-11 px-6 rounded-xl border border-[#f97316]  uppercase hidden md:inline-flex items-center cursor-pointer"
                   onClick={() => contactSetIsOpen(!isOpen)}
                   onMouseEnter={() => contactSetIsOpen(true)}
                   onMouseLeave={() => contactSetIsOpen(false)}

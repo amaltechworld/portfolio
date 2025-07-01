@@ -1,12 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { createProject } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { account } from "@/lib/appwrite";
 
 export default function NewProject() {
-  
-
   const [form, setForm] = useState({
     title: "",
     image: "",
@@ -47,22 +46,37 @@ export default function NewProject() {
 
   return (
     <div className="max-w-xl mx-auto p-4">
+      <div className="mb-4 space-x-4">
+        <Link href="/admin/dashboard" className="text-blue-600 hover:underline">
+          ← Back to Dashboard
+        </Link>
+        <Link href="/admin/projects" className="text-blue-600 hover:underline">
+          ← Back to Projects
+        </Link>
+      </div>
       <h1 className="text-2xl font-bold mb-4">Add New Project</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["title", "image", "date", "link", "year", "month", "week"].map((field) => (
-          <input
-            key={field}
-            name={field}
-            type={field === "date" ? "date" : "text"}
-            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-            value={form[field as keyof typeof form]}
-            onChange={handleChange}
-            className="border p-2 w-full"
-            required
-          />
-        ))}
+        {["title", "image", "date", "link", "year", "month", "week"].map(
+          (field) => (
+            <input
+              key={field}
+              name={field}
+              type={field === "date" ? "date" : "text"}
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+              value={form[field as keyof typeof form]}
+              onChange={handleChange}
+              className="border p-2 w-full"
+              required
+            />
+          )
+        )}
         {error && <div className="text-red-500">{error}</div>}
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Create</button>
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Create
+        </button>
       </form>
     </div>
   );

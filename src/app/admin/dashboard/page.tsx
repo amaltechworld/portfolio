@@ -19,15 +19,36 @@ export default function AdminDashboard() {
         <ul className="space-y-4">
           <li>
             <Link href="/admin/projects">
-              <span className="text-blue-600 hover:underline">Manage Projects</span>
+              <span className="text-blue-600 hover:underline block p-2 rounded hover:bg-gray-100">📁 Manage Projects</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/projects/new">
+              <span className="text-blue-600 hover:underline block p-2 rounded hover:bg-gray-100">➕ Add New Project</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/monthly-project">
+              <span className="text-blue-600 hover:underline block p-2 rounded hover:bg-gray-100">📅 View Monthly Projects</span>
             </Link>
           </li>
           <li>
             <Link href="/">
-              <span className="text-blue-600 hover:underline">View Portfolio</span>
+              <span className="text-blue-600 hover:underline block p-2 rounded hover:bg-gray-100">🏠 View Portfolio</span>
             </Link>
           </li>
-          {/* Add more admin links here */}
+          <li>
+            <button 
+              onClick={() => {
+                account.deleteSession('current').then(() => {
+                  window.location.href = '/admin/login';
+                });
+              }}
+              className="text-red-600 hover:underline block p-2 rounded hover:bg-gray-100 w-full text-left"
+            >
+              🚪 Logout
+            </button>
+          </li>
         </ul>
       </div>
     </div>
