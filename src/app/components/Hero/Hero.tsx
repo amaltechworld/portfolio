@@ -134,7 +134,7 @@ const Hero = () => {
         <div className="md:col-span-5 relative">
           {/* hero image */}
           <motion.div
-            className=" h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full"
+            className="relative h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full"
             // style={ isDesktop ? { width: portraitWidth } : {} }
             style={{ width: portraitWidth }}
           >

@@ -7,4 +7,8 @@ export interface Project {
   year: number;
   month: number;
   week: number;
+  performance?: number;
+  seo?: number;
+  accessibility?: number;
+  bestPractices?: number;
 }

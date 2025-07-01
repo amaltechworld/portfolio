@@ -55,6 +55,7 @@ const Projects = () => {
                     alt={name}
                     fill
                     className="size-full object-cover"
+                    sizes="(max-width: 767px) 100vw, 0px"
                   />
                 </div>
                 {/* image for mobile- end*/}
@@ -72,6 +73,7 @@ const Projects = () => {
                         alt={name}
                         fill
                         className="size-full object-cover"
+                        sizes="(min-width: 768px) 300px, 0px"
                       />
                     </div>
                   </div>

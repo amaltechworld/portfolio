@@ -64,6 +64,7 @@ const Testimonial = (
               alt={name}
               fill
               className="object-cover w-full h-full"
+              sizes="(min-width: 768px) 50vw, 100vw"
               style={{
                 objectPosition: `50% ${imagePositionY * 100}%`,
               }}

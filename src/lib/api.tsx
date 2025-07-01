@@ -38,7 +38,13 @@ export async function createProject(
     DATABASE_ID,
     COLLECTION_ID,
     ID.unique(),
-    data
+    {
+      ...data,
+      performance: data.performance || 0,
+      seo: data.seo || 0,
+      accessibility: data.accessibility || 0,
+      best_practices: data.bestPractices || 0,
+    }
   );
 
   return {
@@ -50,6 +56,10 @@ export async function createProject(
     year: Number(response.year),
     month: Number(response.month),
     week: Number(response.week),
+    performance: response.performance || 0,
+    seo: response.seo || 0,
+    accessibility: response.accessibility || 0,
+    bestPractices: response.best_practices || 0,
   };
 }
 
@@ -58,11 +68,16 @@ export async function updateProject(
   projectId: string,
   data: Partial<Project>
 ): Promise<Project> {
+  const updateData = {
+    ...data,
+    ...(data.bestPractices !== undefined && { best_practices: data.bestPractices }),
+  };
+  
   const response = await databases.updateDocument(
     DATABASE_ID,
     COLLECTION_ID,
     projectId,
-    data
+    updateData
   );
 
   return {
@@ -74,10 +89,39 @@ export async function updateProject(
     year: Number(response.year),
     month: Number(response.month),
     week: Number(response.week),
+    performance: response.performance || 0,
+    seo: response.seo || 0,
+    accessibility: response.accessibility || 0,
+    bestPractices: response.best_practices || 0,
   };
 }
 
 // This function deletes a project by its ID for admin
 export async function deleteProject(projectId: string): Promise<void> {
   await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, projectId);
+}
+
+// This function fetches a single project by its ID for admin
+export async function getProject(projectId: string): Promise<Project> {
+  try {
+    const response = await databases.getDocument(DATABASE_ID, COLLECTION_ID, projectId);
+    
+    return {
+      $id: response.$id,
+      title: response.title,
+      image: response.image,
+      date: response.date,
+      link: response.link,
+      year: Number(response.year),
+      month: Number(response.month),
+      week: Number(response.week),
+      performance: response.performance,
+      seo: response.seo,
+      accessibility: response.accessibility,
+      bestPractices: response.best_practices,
+    };
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    throw error;
+  }
 }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { Archivo } from "next/font/google";
 import "./globals.css";
@@ -9,6 +9,12 @@ const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Amal Raj - Full Stack Developer & Web Designer Portfolio",
@@ -56,11 +62,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "your-google-verification-code",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
   },
 };
 

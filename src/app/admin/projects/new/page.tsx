@@ -14,7 +14,14 @@ export default function NewProject() {
     year: "",
     month: "",
     week: "",
+    performance: "",
+    seo: "",
+    accessibility: "",
+    bestPractices: "",
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -28,19 +35,61 @@ export default function NewProject() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadImage = async (file: File): Promise<string> => {
+    // For now, we'll convert to base64 and store directly
+    // In production, you'd want to upload to a proper storage service
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setUploading(true);
+
     try {
+      let imageUrl = form.image;
+
+      // Upload image if a file was selected
+      if (imageFile) {
+        imageUrl = await uploadImage(imageFile);
+      }
+
       await createProject({
         ...form,
+        image: imageUrl,
         year: Number(form.year),
         month: Number(form.month),
         week: Number(form.week),
+        performance: Number(form.performance) || 0,
+        seo: Number(form.seo) || 0,
+        accessibility: Number(form.accessibility) || 0,
+        bestPractices: Number(form.bestPractices) || 0,
       });
       router.push("/admin/projects");
     } catch (err: any) {
       setError(err.message || "Failed to create project");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -55,28 +104,225 @@ export default function NewProject() {
         </Link>
       </div>
       <h1 className="text-2xl font-bold mb-4">Add New Project</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {["title", "image", "date", "link", "year", "month", "week"].map(
-          (field) => (
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Basic Information */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold border-b pb-2">
+            Basic Information
+          </h2>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Title *</label>
             <input
-              key={field}
-              name={field}
-              type={field === "date" ? "date" : "text"}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              value={form[field as keyof typeof form]}
+              name="title"
+              type="text"
+              placeholder="Project Title"
+              value={form.title}
               onChange={handleChange}
-              className="border p-2 w-full"
+              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
             />
-          )
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Date *</label>
+              <input
+                name="date"
+                type="date"
+                value={form.date}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Project Link *
+              </label>
+              <input
+                name="link"
+                type="url"
+                placeholder="https://example.com"
+                value={form.link}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Year *</label>
+              <input
+                name="year"
+                type="number"
+                placeholder="2024"
+                value={form.year}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Month *</label>
+              <input
+                name="month"
+                type="number"
+                min="1"
+                max="12"
+                placeholder="1-12"
+                value={form.month}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Week *</label>
+              <input
+                name="week"
+                type="number"
+                min="1"
+                max="4"
+                placeholder="1-4"
+                value={form.week}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Image Upload */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold border-b pb-2">Project Image</h2>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Upload Image *
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            {imagePreview && (
+              <div className="mt-4">
+                <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                <img
+                  src={imagePreview}
+                  alt="Project preview"
+                  className="max-h-60 w-auto rounded-lg border shadow-sm"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Performance Metrics */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold border-b pb-2">
+            Performance Metrics
+          </h2>
+          <p className="text-sm text-gray-600">
+            Enter scores from 0-100 for each metric
+          </p>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Performance
+              </label>
+              <input
+                name="performance"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="94"
+                value={form.performance}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">SEO</label>
+              <input
+                name="seo"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="98"
+                value={form.seo}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Accessibility
+              </label>
+              <input
+                name="accessibility"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="91"
+                value={form.accessibility}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Best Practices
+              </label>
+              <input
+                name="bestPractices"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="92"
+                value={form.bestPractices}
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </div>
         )}
-        {error && <div className="text-red-500">{error}</div>}
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Create
-        </button>
+
+        <div className="flex gap-4 pt-4">
+          <button
+            type="submit"
+            disabled={uploading}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {uploading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+                Creating...
+              </>
+            ) : (
+              "Create Project"
+            )}
+          </button>
+          <Link
+            href="/admin/projects"
+            className="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600"
+          >
+            Cancel
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -3,9 +3,12 @@
  * Ensures smooth scrolling and proper routing between pages
  */
 
-export const navigateToSection = (sectionId: string, fallbackUrl: string = "/") => {
+export const navigateToSection = (
+  sectionId: string,
+  fallbackUrl: string = "/"
+) => {
   const hash = sectionId.startsWith("#") ? sectionId : `#${sectionId}`;
-  
+
   // Check if we're on the home page and target exists
   if (window.location.pathname === "/" || window.location.pathname === "") {
     const target = document.querySelector(hash);
@@ -14,7 +17,7 @@ export const navigateToSection = (sectionId: string, fallbackUrl: string = "/") 
       return true;
     }
   }
-  
+
   // Navigate to home page with hash if target doesn't exist or we're on a different page
   window.location.href = fallbackUrl + hash;
   return false;
