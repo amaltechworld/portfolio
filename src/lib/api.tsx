@@ -1,6 +1,6 @@
 import { databases } from "./appwrite";
 import { ID } from "appwrite";
-import { Project } from "@/types/project"; 
+import { Project } from "@/types/project";
 
 const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID!;
 const COLLECTION_ID = process.env.NEXT_PUBLIC_COLLECTION_ID!;
@@ -34,12 +34,14 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(
   data: Omit<Project, "$id">
 ): Promise<Project> {
+  const { bestPractices, ...dataWithoutBestPractices } = data;
+
   const response = await databases.createDocument(
     DATABASE_ID,
     COLLECTION_ID,
     ID.unique(),
     {
-      ...data,
+      ...dataWithoutBestPractices,
       performance: data.performance || 0,
       seo: data.seo || 0,
       accessibility: data.accessibility || 0,
@@ -68,11 +70,15 @@ export async function updateProject(
   projectId: string,
   data: Partial<Project>
 ): Promise<Project> {
+  const { bestPractices, ...dataWithoutBestPractices } = data;
+
   const updateData = {
-    ...data,
-    ...(data.bestPractices !== undefined && { best_practices: data.bestPractices }),
+    ...dataWithoutBestPractices,
+    ...(data.bestPractices !== undefined && {
+      best_practices: data.bestPractices,
+    }),
   };
-  
+
   const response = await databases.updateDocument(
     DATABASE_ID,
     COLLECTION_ID,
@@ -104,8 +110,12 @@ export async function deleteProject(projectId: string): Promise<void> {
 // This function fetches a single project by its ID for admin
 export async function getProject(projectId: string): Promise<Project> {
   try {
-    const response = await databases.getDocument(DATABASE_ID, COLLECTION_ID, projectId);
-    
+    const response = await databases.getDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      projectId
+    );
+
     return {
       $id: response.$id,
       title: response.title,

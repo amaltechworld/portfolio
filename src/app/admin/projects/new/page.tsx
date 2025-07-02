@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createProject } from "@/lib/api";
 import { useRouter } from "next/navigation";
-import { account } from "@/lib/appwrite";
+import { account, storage } from "@/lib/appwrite";
+import { ID } from "appwrite";
 
 export default function NewProject() {
   const [form, setForm] = useState({
@@ -50,15 +51,24 @@ export default function NewProject() {
   };
 
   const uploadImage = async (file: File): Promise<string> => {
-    // For now, we'll convert to base64 and store directly
-    // In production, you'd want to upload to a proper storage service
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        resolve(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      // Upload file to Appwrite Storage
+      const response = await storage.createFile(
+        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!, // You'll need to add this to your env
+        ID.unique(),
+        file
+      );
+      
+      // Get the file URL
+      const fileUrl = storage.getFileView(
+        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
+        response.$id
+      );
+      
+      return fileUrl.toString();
+    } catch (error) {
+      throw new Error("Failed to upload image");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

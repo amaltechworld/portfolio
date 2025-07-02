@@ -1,11 +1,9 @@
-
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { useEffect, useRef, type HTMLAttributes } from "react";
 import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
 import { useInView, motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
-
 
 const Testimonial = (
   props: {
@@ -46,7 +44,6 @@ const Testimonial = (
     }
   }, [isInView, quoteEntranceAnimation, citeEntranceAnimation]);
 
-
   return (
     <>
       <div
@@ -71,7 +68,7 @@ const Testimonial = (
             />
             <AnimatePresence mode="wait">
               <motion.div
-              key={image}
+                key={image}
                 className="absolute h-full bg-stone-900"
                 initial={{
                   width: "100%",

@@ -187,7 +187,7 @@ const DailyProject = ({
               </div>
               {/* Date */}
               <div className="mt-2 text-center text-base font-medium text-gray-700">
-                {new Date(project.date).toLocaleDateString()}
+                {new Date(project.date).toLocaleDateString("en-GB")}
               </div>
               {/* Visit Page Button */}
               <a
