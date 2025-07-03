@@ -34,14 +34,12 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(
   data: Omit<Project, "$id">
 ): Promise<Project> {
-  const { bestPractices, ...dataWithoutBestPractices } = data;
-
   const response = await databases.createDocument(
     DATABASE_ID,
     COLLECTION_ID,
     ID.unique(),
     {
-      ...dataWithoutBestPractices,
+      ...data,
       performance: data.performance || 0,
       seo: data.seo || 0,
       accessibility: data.accessibility || 0,

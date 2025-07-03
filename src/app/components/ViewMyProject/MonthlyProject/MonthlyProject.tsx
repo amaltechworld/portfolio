@@ -25,8 +25,6 @@ export default function MonthlyProject() {
 
   // Single useEffect for data fetching
   useEffect(() => {
-    let mounted = true;
-
     const fetchProjects = async () => {
       try {
         setLoading(true);
@@ -44,11 +42,6 @@ export default function MonthlyProject() {
     };
 
     fetchProjects();
-
-    // Cleanup function
-    return () => {
-      mounted = false;
-    };
   }, []);
 
   // Show loading spinner when loading is true

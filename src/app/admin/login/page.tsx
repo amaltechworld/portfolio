@@ -17,12 +17,12 @@ export default function AdminLogin() {
       try {
         await account.get(); // If session exists
         router.push("/admin/dashboard"); // Redirect
-      } catch (_) {
+      } catch {
         // No session, do nothing
       }
     };
     checkSession();
-  }, []);
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ export default function AdminLogin() {
     try {
       await account.createEmailPasswordSession(email, password);
       router.push("/admin/dashboard");
-    } catch (err: any) {
+    } catch {
       setError("Login failed. Please check your email and password.");
     } finally {
       setLoading(false);

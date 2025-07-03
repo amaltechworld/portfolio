@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
 import ArrowUpRight from "../icons/arrow-up-right.svg";
-import Link from "next/link";
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const navItems = [

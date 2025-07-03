@@ -72,7 +72,7 @@ const DailyProject = ({
   const weekRanges = [];
   let start = 1;
   for (let i = 0; i < 4; i++) {
-    let end = start + baseWeekLength - 1 + (i < remainder ? 1 : 0);
+    const end = start + baseWeekLength - 1 + (i < remainder ? 1 : 0);
     weekRanges.push([start, end]);
     start = end + 1;
   }
@@ -132,7 +132,7 @@ const DailyProject = ({
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {projects.map((project: any, index: number) => (
+          {projects.map((project: Project, index: number) => (
             <motion.div
               key={project.$id}
               className="relative flex flex-col items-center w-full group lazy-load"

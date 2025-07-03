@@ -93,8 +93,8 @@ export default function EditProject() {
         bestPractices: Number(form.bestPractices) || 0,
       });
       router.push("/admin/projects");
-    } catch (err: any) {
-      setError(err.message || "Failed to update project");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to update project");
     } finally {
       setUpdating(false);
     }

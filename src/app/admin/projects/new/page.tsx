@@ -66,7 +66,7 @@ export default function NewProject() {
       );
       
       return fileUrl.toString();
-    } catch (error) {
+    } catch (_error) {
       throw new Error("Failed to upload image");
     }
   };
@@ -96,8 +96,8 @@ export default function NewProject() {
         bestPractices: Number(form.bestPractices) || 0,
       });
       router.push("/admin/projects");
-    } catch (err: any) {
-      setError(err.message || "Failed to create project");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to create project");
     } finally {
       setUploading(false);
     }
