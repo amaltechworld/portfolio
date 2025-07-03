@@ -66,7 +66,7 @@ export default function NewProject() {
       );
       
       return fileUrl.toString();
-    } catch (_error) {
+    } catch {
       throw new Error("Failed to upload image");
     }
   };

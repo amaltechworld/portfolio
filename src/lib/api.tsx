@@ -68,10 +68,8 @@ export async function updateProject(
   projectId: string,
   data: Partial<Project>
 ): Promise<Project> {
-  const { bestPractices, ...dataWithoutBestPractices } = data;
-
   const updateData = {
-    ...dataWithoutBestPractices,
+    ...data,
     ...(data.bestPractices !== undefined && {
       best_practices: data.bestPractices,
     }),

@@ -12,7 +12,7 @@ const LoadingSpinner = () => (
   <div className="fixed inset-0 bg-white/80 z-50 flex items-center justify-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
   </div>
-); 
+);
 
 export default function MonthlyProject() {
   // All state declarations at the top
@@ -109,7 +109,9 @@ export default function MonthlyProject() {
                     {monthProjects[0]?.image && (
                       <img
                         src={monthProjects[0].image}
-                        alt={`${monthName} ${selectedYear} projects preview - ${monthProjects.length} project${monthProjects.length !== 1 ? 's' : ''}`}
+                        alt={`${monthName} ${selectedYear} projects preview - ${
+                          monthProjects.length
+                        } project${monthProjects.length !== 1 ? "s" : ""}`}
                         className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
                         loading="lazy"
                         decoding="async"

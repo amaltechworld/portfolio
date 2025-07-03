@@ -39,31 +39,6 @@ const DailyProject = ({
     fetchProjects();
   }, [year, month, week]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(
-              entry.target.getAttribute("data-index") || "0",
-              10
-            );
-            setVisibleProjects((prev) => [...prev, projects[index]]);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = observerRef.current?.querySelectorAll(".lazy-load") || [];
-    elements.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, [projects]);
-
-  if (loading) return <LoadingSpinner />;
-
   // Calculate week start/end dates
   const daysInMonth = new Date(year, month, 0).getDate();
   const baseWeekLength = Math.floor(daysInMonth / 4);
@@ -88,6 +63,32 @@ const DailyProject = ({
       d.getDate() <= weekEnd
     );
   });
+
+  // Intersection Observer for Lazy Loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(
+              entry.target.getAttribute("data-index") || "0",
+              10
+            );
+            setVisibleProjects((prev) => [...prev, filteredProjects[index]]);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = observerRef.current?.querySelectorAll(".lazy-load") || [];
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, [filteredProjects]);
+
+  if (loading) return <LoadingSpinner />;
 
   // Calculate stats
   const totalWorks = projects.length;
@@ -132,7 +133,7 @@ const DailyProject = ({
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {projects.map((project: Project, index: number) => (
+          {filteredProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.$id}
               className="relative flex flex-col items-center w-full group lazy-load"
