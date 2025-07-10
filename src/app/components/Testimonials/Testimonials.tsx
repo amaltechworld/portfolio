@@ -26,15 +26,15 @@ const testimonials = [
     image: "/prabhul.jpeg",
     imagePositionY: 0.1,
   },
-  {
-    name: "Emily Watson",
-    company: "Studio Minimal",
-    role: "Creative Director",
-    quote:
-      "The collaborative process was amazing. Alex brought lots of fresh perspectives and innovative solutions.",
-    image: "/testimonial-3.jpg",
-    imagePositionY: 0.55,
-  },
+  // {
+  //   name: "Emily Watson",
+  //   company: "Studio Minimal",
+  //   role: "Creative Director",
+  //   quote:
+  //     "The collaborative process was amazing. Alex brought lots of fresh perspectives and innovative solutions.",
+  //   image: "/testimonial-3.jpg",
+  //   imagePositionY: 0.55,
+  // },
 ];
 
 const Testimonials = () => {

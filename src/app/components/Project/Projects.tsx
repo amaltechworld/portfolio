@@ -11,29 +11,12 @@ const projects = [
     alt: "MyGala Project",
   },
   {
-    name: "Wavelength Studios",
+    name: "Colors Of Happiness",
     image: "/project-2.jpg",
     link: "",
-    alt: "Wavelength Studios Project",
+    alt: "Colors Of Happiness Project",
   },
-  {
-    name: "Nova Fitness",
-    image: "/project-3.jpg",
-    link: "",
-    alt: "Nova Fitness Project",
-  },
-  {
-    name: "Urban Plates",
-    image: "/project-4.jpg",
-    link: "",
-    alt: "Urban Plates Project",
-  },
-  {
-    name: "Bloom Botanicals",
-    image: "/project-5.jpg",
-    link: "",
-    alt: "Bloom Botanicals Project",
-  },
+
 ];
 
 const Projects = () => {
