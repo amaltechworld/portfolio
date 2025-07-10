@@ -123,9 +123,9 @@ const Hero = () => {
                 }}
                 className="relative"
               >
-                <button className="h-auto px-0 border-transparent inline-flex after: content-[''] after:h-px after:w-0 after:absolute after:top-full after:bg-[#f97316] hover:after:w-full after:transition-all after:duration-300 after:ease-in-out">
+                <span className="h-auto px-0 border-transparent inline-flex after: content-[''] after:h-px after:w-0 after:absolute after:top-full after:bg-[#f97316] hover:after:w-full after:transition-all after:duration-300 after:ease-in-out">
                   Let&apos;s Talk
-                </button>
+                </span>
               </motion.div>
             </div>
             {/* button div end */}
@@ -135,7 +135,7 @@ const Hero = () => {
         <div className="md:col-span-5 relative">
           {/* hero image */}
           <motion.div
-            className="relative h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full"
+            className="relative h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full translate-y-14"
             // style={ isDesktop ? { width: portraitWidth } : {} }
             style={{ width: portraitWidth }}
           >
