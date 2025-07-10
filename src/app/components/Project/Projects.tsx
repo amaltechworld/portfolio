@@ -8,26 +8,31 @@ const projects = [
     name: "MyGala",
     image: "/project-1.png",
     link: "https://mygalagroup123.netlify.app/",
+    alt: "MyGala Project",
   },
   {
     name: "Wavelength Studios",
     image: "/project-2.jpg",
     link: "",
+    alt: "Wavelength Studios Project",
   },
   {
     name: "Nova Fitness",
     image: "/project-3.jpg",
     link: "",
+    alt: "Nova Fitness Project",
   },
   {
     name: "Urban Plates",
     image: "/project-4.jpg",
     link: "",
+    alt: "Urban Plates Project",
   },
   {
     name: "Bloom Botanicals",
     image: "/project-5.jpg",
     link: "",
+    alt: "Bloom Botanicals Project",
   },
 ];
 
@@ -38,7 +43,7 @@ const Projects = () => {
         <h2 className="text-4xl md:text-7xl lg:text-8xl">Selected Works</h2>
         {/* image div */}
         <div className="mt-10 md:mt-16 lg:mt-20">
-          {projects.map(({ name, image, link }) => (
+          {projects.map(({ name, image, link, alt }) => (
             <a
               href={link}
               target="_blank"
@@ -52,7 +57,7 @@ const Projects = () => {
                 <div className="relative h-48 w-full aspect-video md:hidden">
                   <Image
                     src={image}
-                    alt={name}
+                    alt={alt}
                     fill
                     className="size-full object-cover"
                     sizes="(max-width: 767px) 100vw, 0px"

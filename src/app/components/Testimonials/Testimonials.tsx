@@ -111,12 +111,14 @@ const Testimonials = () => {
           <button
             className="border border-stone-400 inline-flex items-center justify-center rounded-full hover:bg-[#f97316] hover:text-white hover:border-[#f97316] transition-all duration-300"
             onClick={handleClickPrev}
+            aria-label="Previous testimonial"
           >
             <ArrowLeft className="w-11 h-11" />
           </button>
           <button
             className="border border-stone-400 inline-flex items-center justify-center rounded-full hover:bg-[#f97316] hover:text-white hover:border-[#f97316] transition-all duration-300"
             onClick={handleClickNext}
+            aria-label="Next testimonial"
           >
             <ArrowRight className="w-11 h-11" />
           </button>

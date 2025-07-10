@@ -55,7 +55,7 @@ const Footer = () => {
           <div className="flex items-center gap-3">
             <div className="size-3 rounded-full bg-green-400 animate-pulse"></div>{" "}
             {/* green indicator */}
-            <span className="uppercase">One spot available for next month</span>
+            <span className="uppercase">Built with Next.js by Amal Raj</span>
           </div>
           <div className="md:grid md:grid-cols-3 md:items-center">
             {/* md: left side */}

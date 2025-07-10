@@ -79,7 +79,8 @@ const Hero = () => {
               }`}
               ref={titleScope}
             >
-              Crafting digital experiences through code and creative design
+              Crafting digital experiences through code and creative design with
+              Next.js.
             </h1>
             {/* button div start */}
             <div className="flex flex-col md:flex-row mt-10 items-start md:items-center gap-6">
