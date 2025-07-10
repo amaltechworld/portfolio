@@ -19,6 +19,7 @@ const Hero = () => {
   const [titleScope, titleAnimate] = useAnimate();
   const [ready, setReady] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const scrollingDiv = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -61,6 +62,17 @@ const Hero = () => {
       }
     );
   }, [titleAnimate, titleScope]);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const handleClick = () => {
     setIsNavigating(true);
@@ -112,7 +124,7 @@ const Hero = () => {
                   </div>
                 )}
               </motion.div>
-              {/* button 2 */}
+
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -128,17 +140,20 @@ const Hero = () => {
                 </span>
               </motion.div>
             </div>
-            {/* button div end */}
           </div>
         </div>
         {/* right content */}
         <div className="md:col-span-5 relative">
           {/* hero image */}
           <motion.div
-            className="relative h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full translate-y-14"
+            className="relative h-96 mt-20 w-full md:mt-0 md:size-full md:absolute md:right-0 max-md:!w-full"
             // style={ isDesktop ? { width: portraitWidth } : {} }
-            style={{ width: portraitWidth }}
+            style={{
+              width: portraitWidth,
+              transform: `translateY(${isMobile ? "5rem" : "3.5rem"})`,
+            }}
           >
+            {/*  /hero-mobile-image.jpg*/}
             <Image
               src="/hero-image.jpg"
               alt="hero image"
