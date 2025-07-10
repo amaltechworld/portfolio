@@ -34,9 +34,11 @@ const Intro = () => {
   return (
     <section className="section mt-12 md:mt-16 lg:mt-20" id="intro" ref={scope}>
       <div className="container mx-auto container-padding ">
-        <h2 className="text-3xl md:text-6xl lg:text-7xl lg:w-[80%] space-y-3">
-          Creating modern web pages with Next.js, transforming provided designs
-          into clean and thoughtful implementations to help your business grow
+        <h2 className="text-3xl md:text-6xl lg:text-5xl lg:w-[80%] space-y-3">
+          Building clean, scalable websites with{" "}
+          <span className="text-red-900 font-semibold">Next.js</span> —
+          transforming your ideas or designs into polished, modern web
+          experiences that grow your business.
         </h2>
       </div>
     </section>
