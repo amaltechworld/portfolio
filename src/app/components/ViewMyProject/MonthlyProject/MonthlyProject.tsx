@@ -52,7 +52,7 @@ export default function MonthlyProject() {
   // Filter projects for selected year
   const projectsThisYear = projects.filter((p) => p.year === selectedYear);
   const months = Array.from(new Set(projectsThisYear.map((p) => p.month))).sort(
-    (a, b) => a - b
+    (a, b) => b - a
   );
 
   return (

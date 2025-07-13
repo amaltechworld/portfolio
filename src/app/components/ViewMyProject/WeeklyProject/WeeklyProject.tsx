@@ -57,8 +57,8 @@ export default function WeeklyProject({ year, month }: WeeklyProjectProps) {
     (p) => p.year === year && p.month === month
   );
 
-  // Create week ranges (4 weeks)
-  const weeks = [1, 2, 3, 4];
+  // Create week ranges (4 weeks) - latest week first
+  const weeks = [4, 3, 2, 1];
 
   return (
     <>

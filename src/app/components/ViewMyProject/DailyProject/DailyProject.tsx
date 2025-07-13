@@ -54,15 +54,17 @@ const DailyProject = ({
   const [weekStart, weekEnd] = weekRanges[week - 1];
 
   // Filter projects for this week (assuming project.date is "YYYY-MM-DD")
-  const filteredProjects = projects.filter((p) => {
-    const d = new Date(p.date);
-    return (
-      d.getFullYear() === year &&
-      d.getMonth() + 1 === month &&
-      d.getDate() >= weekStart &&
-      d.getDate() <= weekEnd
-    );
-  });
+  const filteredProjects = projects
+    .filter((p) => {
+      const d = new Date(p.date);
+      return (
+        d.getFullYear() === year &&
+        d.getMonth() + 1 === month &&
+        d.getDate() >= weekStart &&
+        d.getDate() <= weekEnd
+      );
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Intersection Observer for Lazy Loading
   useEffect(() => {
