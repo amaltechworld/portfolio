@@ -35,3 +35,11 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # portfolio
+
+## /admin/projects/new
+
+Logic of the weeks need to be set like-
+Week 1: Days 1-7 (or 1-8)
+Week 2: Days 8-15 (or 9-16)
+Week 3: Days 16-23 (or 17-24)
+Week 4: Days 24-31 (or 25-31)
