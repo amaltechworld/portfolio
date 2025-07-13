@@ -52,22 +52,35 @@ export default function NewProject() {
 
   const uploadImage = async (file: File): Promise<string> => {
     try {
+      // Validate file size (optional)
+      if (file.size > 10 * 1024 * 1024) {
+        // 10MB limit
+        throw new Error(
+          "File size too large. Please select a file smaller than 10MB."
+        );
+      }
+
       // Upload file to Appwrite Storage
       const response = await storage.createFile(
-        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!, // You'll need to add this to your env
+        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
         ID.unique(),
         file
       );
-      
+
       // Get the file URL
       const fileUrl = storage.getFileView(
         process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
         response.$id
       );
-      
+
       return fileUrl.toString();
-    } catch {
-      throw new Error("Failed to upload image");
+    } catch (error) {
+      console.error("Image upload error:", error);
+      throw new Error(
+        `Failed to upload image: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
   };
 
@@ -77,12 +90,42 @@ export default function NewProject() {
     setUploading(true);
 
     try {
+      // Validate required fields
+      if (
+        !form.title ||
+        !form.date ||
+        !form.link ||
+        !form.year ||
+        !form.month ||
+        !form.week
+      ) {
+        throw new Error("Please fill in all required fields");
+      }
+
+      if (!imageFile && !form.image) {
+        throw new Error("Please select an image to upload");
+      }
+
       let imageUrl = form.image;
 
       // Upload image if a file was selected
       if (imageFile) {
+        console.log("Uploading image...");
         imageUrl = await uploadImage(imageFile);
+        console.log("Image uploaded successfully:", imageUrl);
       }
+
+      console.log("Creating project with data:", {
+        ...form,
+        image: imageUrl,
+        year: Number(form.year),
+        month: Number(form.month),
+        week: Number(form.week),
+        performance: Number(form.performance) || 0,
+        seo: Number(form.seo) || 0,
+        accessibility: Number(form.accessibility) || 0,
+        bestPractices: Number(form.bestPractices) || 0,
+      });
 
       await createProject({
         ...form,
@@ -95,8 +138,11 @@ export default function NewProject() {
         accessibility: Number(form.accessibility) || 0,
         bestPractices: Number(form.bestPractices) || 0,
       });
+
+      console.log("Project created successfully");
       router.push("/admin/projects");
     } catch (err: unknown) {
+      console.error("Project creation error:", err);
       setError(err instanceof Error ? err.message : "Failed to create project");
     } finally {
       setUploading(false);
