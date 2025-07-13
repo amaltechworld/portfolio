@@ -8,15 +8,14 @@ const projects = [
     name: "MyGala",
     image: "/project-1.png",
     link: "https://mygalagroup123.netlify.app/",
-    alt: "MyGala Project",
+    alt: "MyGala Project Project",
   },
   {
     name: "Colors Of Happiness",
     image: "/project-2.jpg",
-    link: "",
+    link: "https://colorsofhappiness.vercel.app/",
     alt: "Colors Of Happiness Project",
   },
-
 ];
 
 const Projects = () => {
