@@ -4,7 +4,8 @@ import Link from "next/link";
 import { getProject, updateProject } from "@/lib/api";
 import { useRouter, useParams } from "next/navigation";
 import { Project } from "@/types/project";
-import { account } from "@/lib/appwrite";
+import { account, storage } from "@/lib/appwrite";
+import { ID } from "appwrite";
 
 export default function EditProject() {
   const router = useRouter();
@@ -59,13 +60,37 @@ export default function EditProject() {
   };
 
   const uploadImage = async (file: File): Promise<string> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        resolve(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      // Validate file size (optional)
+      if (file.size > 10 * 1024 * 1024) {
+        // 10MB limit
+        throw new Error(
+          "File size too large. Please select a file smaller than 10MB."
+        );
+      }
+
+      // Upload file to Appwrite Storage
+      const response = await storage.createFile(
+        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
+        ID.unique(),
+        file
+      );
+
+      // Get the file URL
+      const fileUrl = storage.getFileView(
+        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
+        response.$id
+      );
+
+      return fileUrl.toString();
+    } catch (error) {
+      console.error("Image upload error:", error);
+      throw new Error(
+        `Failed to upload image: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,6 +99,18 @@ export default function EditProject() {
     setUpdating(true);
 
     try {
+      // Validate required fields
+      if (
+        !form.title ||
+        !form.date ||
+        !form.link ||
+        !form.year ||
+        !form.month ||
+        !form.week
+      ) {
+        throw new Error("Please fill in all required fields");
+      }
+
       let imageUrl = form.image;
 
       // Upload new image if a file was selected
@@ -81,8 +118,14 @@ export default function EditProject() {
         imageUrl = await uploadImage(imageFile);
       }
 
-      await updateProject(id, {
+      // Format date to ensure it's in yyyy-MM-dd format
+      const formattedDate = form.date?.includes("T")
+        ? form.date.split("T")[0]
+        : form.date;
+
+      console.log("Updating project with data:", {
         ...form,
+        date: formattedDate,
         image: imageUrl,
         year: Number(form.year),
         month: Number(form.month),
@@ -92,8 +135,24 @@ export default function EditProject() {
         accessibility: Number(form.accessibility) || 0,
         bestPractices: Number(form.bestPractices) || 0,
       });
+
+      await updateProject(id, {
+        ...form,
+        date: formattedDate,
+        image: imageUrl,
+        year: Number(form.year),
+        month: Number(form.month),
+        week: Number(form.week),
+        performance: Number(form.performance) || 0,
+        seo: Number(form.seo) || 0,
+        accessibility: Number(form.accessibility) || 0,
+        bestPractices: Number(form.bestPractices) || 0,
+      });
+
+      console.log("Project updated successfully");
       router.push("/admin/projects");
     } catch (err: unknown) {
+      console.error("Project update error:", err);
       setError(err instanceof Error ? err.message : "Failed to update project");
     } finally {
       setUpdating(false);

@@ -81,6 +81,9 @@ export async function updateProject(
     }),
   };
 
+  // Remove the original bestPractices field to avoid conflicts
+  delete updateData.bestPractices;
+
   const response = await databases.updateDocument(
     DATABASE_ID,
     COLLECTION_ID,
