@@ -6,7 +6,7 @@ import ArrowUpRight from "../icons/arrow-up-right.svg";
 const projects = [
   {
     name: "MyGala",
-    image: "/project-1.png",
+    image: "/project-1.jpg",
     link: "https://mygalagroup123.netlify.app/",
     alt: "MyGala Project Project",
   },
